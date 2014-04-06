@@ -1,8 +1,7 @@
-/*jslint node: true */
-
 var listify = function listify(list) {
 	"use strict";
 
+	// Array.isArray is not supported in IE8, and needs to be polyfilled for this to work
 	if (!Array.isArray(list)) {
 		throw new TypeError('requires an array');
 	}
@@ -11,13 +10,16 @@ var listify = function listify(list) {
 	if (!options) {
 		options = {};
 	}
+
 	var separator = options.hasOwnProperty('separator') ? options.separator : ', ';
 	var finalWord = options.hasOwnProperty('finalWord') ? options.finalWord : 'and';
 	if (finalWord.length > 0) {
 		finalWord += ' ';
 	}
 
+	// Array.filter is not supported in IE8, and needs to be polyfilled for this to work
 	var trimmed = list.filter(function (item) { return String(item).trim(); });
+	
 	var str;
 	if (trimmed.length === 2 && finalWord.length > 0) {
 		str = trimmed.join(' ' + finalWord);
@@ -28,6 +30,3 @@ var listify = function listify(list) {
 	}
 	return str;
 };
-
-module.exports = listify;
-
